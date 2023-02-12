@@ -1,36 +1,62 @@
-.astronomyContainer{
+.homeContainer{
     width: 100vw;
-    height: 50%;
+    height: 70%;
 }
 
-.astronomyInputFieldForm{
+.homeInputFieldForm{
     width: 100vw;
     height: 70px;
     margin-top: 10px;
     padding: 0;
 }
 
-.astronomyInputFieldForm > input{
+.homeInputFieldForm > input{
     width: 75%;
     height: 50px;
     margin-right:10px;
     padding: 0px;
     text-align: center;
 }
-.astronomyInputFieldForm > button{
+.homeInputFieldForm > button{
     width: 20%;
     height: 50px;
     padding: 0;
 }
 
-.astronomyInfo {
+.homeInfoContainer {
     display: inline-block; 
-    border: 2px solid black;
+    border: 2px solid #ce2c2c;
     margin-top: 15px; 
     margin-right: 15px;
     padding: 25px;
+    width: 80%;
     border-radius: 10px;
     background-color: black;
     color: aliceblue;
-    text-align: left;
+    
+}
+
+.homeWeatherConditions{
+    border: 2px solid #ce2c2c;
+    background-color: white;
+    height: 80%;
+    color: black;
+    top: 0;
+    text-decoration:dotted;
+    display: inline-block;
+    margin: 15px;
+    padding: 25px;
+    border-radius: 10px;
+}
+.homeWeatherDetails{
+    border: 2px solid #ce2c2c;
+    background-color: white;
+    height: 80%;
+    top: 0;
+    color: black;
+    text-decoration:dotted;
+    display: inline-block;
+    margin: 15px;
+    padding: 25px;
+    border-radius: 10px;
 }
