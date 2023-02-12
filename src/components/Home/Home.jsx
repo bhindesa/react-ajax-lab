@@ -10,6 +10,8 @@ export default function Home(props){
     let [initialLoader, setInitialLoader] = useState(1);
     let [city, setCity] = useState('Toronto');
     let [currentWeatherData, setCurrentWeatherData] = useState();
+    let [locationData, setLocationData] = useState();
+
     let weatherAPIObjectKeys = currentWeatherData ? Object.keys(currentWeatherData) : null;
 
 
@@ -18,10 +20,11 @@ export default function Home(props){
             event.preventDefault();
         }
         APIData = await findWeatherForecast(city, daysToSearchWeather);
+        setCurrentWeatherData(APIData.current);
+        setLocationData(APIData.location)
+        console.log(APIData)
 
-        setCurrentWeatherData(APIData.current)
     }
-    console.log(weatherAPIObjectKeys)
 
     function displayLoaderUI(visibility){
         return <LoaderUI active={visibility}/>
@@ -36,23 +39,29 @@ export default function Home(props){
 
     function displayWeatherData(){
         return (
-                <div className={styles.astronomyInfo}>
-                    <h1><i><u>{city} Weather Info</u></i></h1>
-                    <div>   
+                <div className={styles.homeInfoContainer}>
+                    <h1><i>{locationData.name} Weather</i></h1>
+                    <h6><i>Last Updated : {currentWeatherData.last_updated}</i></h6>
+                    
+                    <div className={styles.homeWeatherConditions}>   
                         {
                             weatherAPIObjectKeys 
-                            ? (weatherAPIObjectKeys.slice(1, 10).map(key => 
-                                <div>{key}: {key === 'condition' ? '' : currentWeatherData[key]}</div>
-                                
+                            ? (weatherAPIObjectKeys.slice(2, 13).map((key,idx )=> 
+                                {
+                                   return (
+                                    key !== 'condition' &&
+                                    <div key={idx}>{key}: {currentWeatherData[key]}</div>
+                                   )
+                                }
                             )) 
                             : ''
                         
                         }
                     </div>
-                    <div>   
+                    <div className={styles.homeWeatherDetails}>   
                         {
                             weatherAPIObjectKeys 
-                            ? (weatherAPIObjectKeys.slice(10, 23).map(key => 
+                            ? (weatherAPIObjectKeys.slice(13, 23).map(key => 
                                 <div>{key}: {key === 'condition' ? '' : currentWeatherData[key]}</div>
                                 
                             )) 
@@ -72,8 +81,8 @@ export default function Home(props){
     }
 
     return (
-        <div className={styles.timeZoneContainer} onLoad={handleOnLoad(handleSubmit)}>
-            <form className={styles.timeZoneInputFieldForm} onSubmit={handleSubmit}>
+        <div className={styles.homeContainer} onLoad={handleOnLoad(handleSubmit)}>
+            <form className={styles.homeInputFieldForm} onSubmit={handleSubmit}>
               <input type="text" placeholder="Enter city name to find astronomy " value={city} name="cityAstronomy" onChange={handleChange}/>
               <button type="submit" >Search Location Astronomy</button>
             </form>
