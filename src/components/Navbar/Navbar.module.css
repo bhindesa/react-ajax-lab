@@ -16,3 +16,9 @@
     cursor: pointer;
     color: purple;
 }
+
+.navbarContainer > div{
+    padding: 15px 8px;
+    flex-basis: 300px;
+    text-decoration: none;
+}

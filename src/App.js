@@ -5,6 +5,8 @@ import TimeZone from './components/TimeZone/TimeZone';
 import LocationAstronomy from './components/LocationAstronomy/LocationAstronomy';
 import WeatherForecast from './components/WeatherForecast/WeatherForecast';
 import Home from './components/Home/Home';
+import LoginPage from './components/LoginPage/LoginPage';
+import LogoutPage from './components/Logout/Logout';
 import styles from './App.module.css'
 // import './utils/api_calls'
 
@@ -12,25 +14,42 @@ class App extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      locationAstronomy : [],
-      timeZone : [],
-      currentWeather : []
+      email: '',
+      pw: '',
+      isUserLogedIn: false
     }
+    this.dummyUser = {
+      email: 'sarbTest@example.com',
+      pw: 'testing'
+    }
+    
+    this.getDummyUser = this.getDummyUser.bind(this);
+    this.setUserInAppState = this.setUserInAppState.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
+    this.setIsUserLoggedIn = this.setIsUserLoggedIn.bind(this)
   }
 
   getLinks(){
     const links = [
       {
-        label : 'Home'
+        label : 'Home',
+        showAuth: this.state.isUserLogedIn ? true: false
       },
       {
-        label : 'Weather Forecast'
+        label : 'Location Astronomy',
+        showAuth: this.state.isUserLogedIn ? true: false
       },
       {
-        label : 'Location Astronomy'
+        label : 'Find Time Zone',
+        showAuth: this.state.isUserLogedIn ? true: false
       },
       {
-        label : 'Find Time Zone'
+        label : 'Login',
+        showAuth: this.state.isUserLogedIn ? false : true
+      },
+      {
+        label : 'Logout',
+        showAuth: this.state.isUserLogedIn ? true: false
       }
     ]
     return links;
@@ -42,24 +61,90 @@ class App extends React.Component {
         {
           path: `/Home`,
           element: (
+            this.state.email 
+            ? 
             <Home />
-          ),
-        },
-        {
-          path: `/Weather Forecast`,
-          element: <WeatherForecast /> ,
+            : 
+            <Navigate to='/Login' replace/>
+          )
         },
         {
           path: `/Location Astronomy`,
-          element: <LocationAstronomy />,
+          element: (
+            this.state.email 
+            ?
+            <LocationAstronomy />
+            :
+            <Navigate to='/Login' replace/>
+          )
         },
         {
           path: `/Find Time Zone`,
-          element: <TimeZone /> ,
+          element: (
+            this.state.email 
+            ?
+            <TimeZone /> 
+            : 
+            <Navigate to='/Login' replace/>
+          )
+        },
+        // {
+        //   path: `/Weather Forecast`,
+        //   element: <WeatherForecast /> ,
+        // },
+        {
+          path: `/Login`,
+          element: (
+            this.state.email 
+            ? 
+            <Navigate to='/Home' />
+            :
+            <LoginPage 
+              userData={this.getDummyUser}
+              setStateInUserAppJS={this.setUserInAppState}
+              setIsUserLoggedIn={this.setIsUserLoggedIn}
+            />
+          )
+        },
+        {
+          path: `/Logout`,
+          element: (
+            <>
+            <LogoutPage handleLogout={this.handleLogout}/> 
+            <Navigate to='/Login'  replace/>
+            </>
+            
+          )
         }
     ];
     return childernRoutes;
   }
+
+  getDummyUser(){
+    return this.dummyUser;
+  }
+
+  setUserInAppState(data){
+    this.setState({
+      email: data.email,
+      pw: data.pw
+    })
+  }
+
+  setIsUserLoggedIn(){
+    this.setState({
+      isUserLogedIn : true
+    })
+  }
+
+  handleLogout(){
+    this.setState({
+      email: '',
+      pw: '',
+      isUserLogedIn : false
+    })
+  }
+
 
   getBaseRoute(){
     const baseRouter = createBrowserRouter(
@@ -67,12 +152,12 @@ class App extends React.Component {
         {
           path: '/',
           element: (
-            <>
-              <Navbar navLinks={this.getLinks()}/>
-              {/* <Navigate to={'/Home'} /> */}
-
-              <Outlet />
-            </>
+                <>
+                  <Navbar 
+                    navLinks={this.getLinks()}
+                    loggedInUserEmail={this.state.email}/>
+                  <Outlet />
+                </>
             ),
           children: this.getChildRoutes()
         }
@@ -82,6 +167,11 @@ class App extends React.Component {
   }
 
   componentDidMount(){
+    console.log(this.state)
+  }
+
+  componentDidUpdate(){
+    console.log(this.state)
   }
 
   render(){

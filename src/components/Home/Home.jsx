@@ -22,7 +22,7 @@ export default function Home(props){
         APIData = await findWeatherForecast(city, daysToSearchWeather);
         setCurrentWeatherData(APIData.current);
         setLocationData(APIData.location)
-        console.log(APIData)
+        // console.log(APIData)
 
     }
 
@@ -41,7 +41,6 @@ export default function Home(props){
         return (
                 <div className={styles.homeInfoContainer}>
                     <h1><i>{locationData.name} Weather</i></h1>
-                    <h6><i>Last Updated : {currentWeatherData.last_updated}</i></h6>
                     
                     <div className={styles.homeWeatherConditions}>   
                         {
@@ -69,6 +68,7 @@ export default function Home(props){
                         
                         }
                     </div>
+                    <h6 className={styles.homeWeatherLastUpdated}><i>Last Updated : {currentWeatherData.last_updated}</i></h6>
 
                 </div>
                
@@ -83,8 +83,8 @@ export default function Home(props){
     return (
         <div className={styles.homeContainer} onLoad={handleOnLoad(handleSubmit)}>
             <form className={styles.homeInputFieldForm} onSubmit={handleSubmit}>
-              <input type="text" placeholder="Enter city name to find astronomy " value={city} name="cityAstronomy" onChange={handleChange}/>
-              <button type="submit" >Search Location Astronomy</button>
+              <input type="text" placeholder="Enter city name to find weather " value={city} name="cityAstronomy" onChange={handleChange}/>
+              <button type="submit" >Search Weather</button>
             </form>
             <hr />
             {
