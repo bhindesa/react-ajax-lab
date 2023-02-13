@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-rou
 import Navbar from './components/Navbar/Navbar';
 import TimeZone from './components/TimeZone/TimeZone';
 import LocationAstronomy from './components/LocationAstronomy/LocationAstronomy';
-import WeatherForecast from './components/WeatherForecast/WeatherForecast';
+// import WeatherForecast from './components/WeatherForecast/WeatherForecast';
 import Home from './components/Home/Home';
 import LoginPage from './components/LoginPage/LoginPage';
 import LogoutPage from './components/Logout/Logout';
@@ -99,11 +99,14 @@ class App extends React.Component {
             ? 
             <Navigate to='/Home' />
             :
-            <LoginPage 
-              userData={this.getDummyUser}
-              setStateInUserAppJS={this.setUserInAppState}
-              setIsUserLoggedIn={this.setIsUserLoggedIn}
-            />
+            <>
+              <LoginPage 
+                userData={this.getDummyUser}
+                setStateInUserAppJS={this.setUserInAppState}
+                setIsUserLoggedIn={this.setIsUserLoggedIn}
+              />
+            </>
+           
           )
         },
         {
