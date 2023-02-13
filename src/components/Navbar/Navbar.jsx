@@ -7,10 +7,19 @@ export default function Navbar(props){
             {
                 props.navLinks.map(link => {
                     return (
-                        <Link to={link.label} key={link.label}> {link.label} </Link>
+                        (link.showAuth 
+                        && 
+                        <Link to={link.label} key={link.label}> {link.label} </Link>)
                     )
                 })
             }
+            <div>
+                {
+                    props.loggedInUserEmail 
+                    ? `Welcome (${props.loggedInUserEmail}) `
+                    :''
+                }
+            </div>
         </div>
     )
 }
